@@ -17,6 +17,16 @@ namespace Sitecore.Support.Shell.Applications.Media.MediaFolder
 {
     public class MediaFolderForm : Sitecore.Shell.Applications.Media.MediaFolder.MediaFolderForm
     {
+        private static readonly bool _resolveMediaItemUsage;
+
+        static MediaFolderForm()
+        {
+            var setting = Sitecore.Configuration.Settings.GetSetting("Sitecore.Support.392252.ResolveMediaItemUsage", "false");
+            if (!bool.TryParse(setting, out _resolveMediaItemUsage))
+            {
+                _resolveMediaItemUsage = false;
+            }
+        }
 
         public MediaFolderForm(BaseTranslate translate, BaseMediaManager mediaManager) : base(translate, mediaManager)
         {
@@ -86,13 +96,17 @@ namespace Sitecore.Support.Shell.Applications.Media.MediaFolder
 
                 validation = validationFormatter.Format(mediaValidatorResults, MediaValidatorFormatterOutput.HtmlPopup);
 
-                LinkDatabase linkDatabase = Globals.LinkDatabase;
-
-                ItemLink[] links = linkDatabase.GetReferrers(item);
-
-                if (links.Length > 0)
+               // Resolve links only if setting allows it
+               if (_resolveMediaItemUsage)
                 {
-                    usages = links.Length + " " + this.Translate.Text(links.Length == 1 ? Texts.USAGE : Texts.USAGES);
+                    LinkDatabase linkDatabase = Globals.LinkDatabase;
+
+                    ItemLink[] links = linkDatabase.GetReferrers(item);
+
+                    if (links.Length > 0)
+                    {
+                        usages = links.Length + " " + this.Translate.Text(links.Length == 1 ? Texts.USAGE : Texts.USAGES);
+                    }
                 }
             }
 
