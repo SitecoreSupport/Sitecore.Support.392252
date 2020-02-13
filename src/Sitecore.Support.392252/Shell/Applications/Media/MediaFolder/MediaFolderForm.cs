@@ -17,15 +17,20 @@ namespace Sitecore.Support.Shell.Applications.Media.MediaFolder
 {
     public class MediaFolderForm : Sitecore.Shell.Applications.Media.MediaFolder.MediaFolderForm
     {
-        private static readonly bool _resolveMediaItemUsage;
+        private static readonly bool _resolveMediaItemUsage = false;
 
         static MediaFolderForm()
         {
             var setting = Sitecore.Configuration.Settings.GetSetting("Sitecore.Support.392252.ResolveMediaItemUsage", "false");
-            if (!bool.TryParse(setting, out _resolveMediaItemUsage))
+            bool value;
+            if (!bool.TryParse(setting, out value))
             {
-                _resolveMediaItemUsage = false;
+                _resolveMediaItemUsage = value;
             }
+        }
+
+        public MediaFolderForm() : base()
+        {
         }
 
         public MediaFolderForm(BaseTranslate translate, BaseMediaManager mediaManager) : base(translate, mediaManager)
