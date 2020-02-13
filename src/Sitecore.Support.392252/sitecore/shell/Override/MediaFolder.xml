@@ -2,7 +2,7 @@
 <control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
   <MediaFolder>
     <FormPage>
-      <CodeBeside Type="Sitecore.Shell.Applications.Media.MediaFolder.MediaFolderForm,Sitecore.Client"/>
+      <CodeBeside Type="Sitecore.Support.Shell.Applications.Media.MediaFolder.MediaFolderForm, Sitecore.Support.392252"/>
       <Stylesheet Src="Media Folder Viewer.css" DeviceDependant="true"/>
       <Stylesheet Src="Dialogs.css" DeviceDependant="true"/>
       
